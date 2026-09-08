@@ -3,6 +3,12 @@
   "items": [
     {
       "date": "2026-09-08",
+      "project": "Project Command Center",
+      "type": "system",
+      "text": "Dashboard local confirmado como operacional no Mac em /Users/amb/Projects/project-command-center."
+    },
+    {
+      "date": "2026-09-08",
       "project": "Abe Joshua — Estudos",
       "type": "project_added",
       "text": "Projeto educacional incluído no Project Command Center."
