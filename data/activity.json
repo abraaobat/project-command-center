@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "date": "2026-09-08",
+      "project": "Abe Joshua — Estudos",
+      "type": "project_added",
+      "text": "Projeto educacional incluído no Project Command Center."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "RadioNode-BR",
+      "type": "architecture",
+      "text": "esp32-afsk adotado como candidato principal para o núcleo AFSK do MVP."
+    },
+    {
+      "date": "2026-09-07",
+      "project": "ESP32 AdBlocker",
+      "type": "validation",
+      "text": "DNS sinkhole validado em 192.168.100.95 com AP+STA."
+    },
+    {
+      "date": "2026-09-07",
+      "project": "RadioLink Mobile",
+      "type": "architecture",
+      "text": "Arquitetura CLI-first e Operations Engine consolidados."
+    }
+  ]
+}

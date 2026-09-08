@@ -1,0 +1,291 @@
+{
+  "lastUpdated": "2026-09-08T00:29:00-04:00",
+  "dashboardVersion": "4.0",
+  "progressNote": "Percentuais são estimativas operacionais baseadas no estágio atual, entregáveis concluídos e próximo marco; não representam esforço linear.",
+  "projects": [
+    {
+      "id": "radiolink-mobile",
+      "name": "RadioLink Mobile",
+      "category": "radio",
+      "kind": "Software • CLI-first • macOS → mobile",
+      "status": "Em construção",
+      "statusClass": "build",
+      "priority": "Alta",
+      "progress": 28,
+      "roadmap": "F0–F12",
+      "current": "Foundation concluída; Device/KISS/AX.25 em evolução",
+      "architecture": "Device → Transport → TNC/Modem → Protocol → Mode → UI",
+      "next": "Validar fluxo real KISS/AX.25/APRS com hardware mantendo a CLI como primeira interface.",
+      "action": "Fechar teste ponta a ponta: rádio ↔ TNC/modem ↔ KISS ↔ RadioLink CLI.",
+      "subprojects": [
+        "CLI macOS",
+        "KISS Transport Core",
+        "AX.25/APRS",
+        "Operations Engine",
+        "Mobile futuro"
+      ]
+    },
+    {
+      "id": "radionode-br",
+      "name": "RadioNode-BR",
+      "category": "radio",
+      "kind": "Hardware/Firmware • ESP32-S3 • TNC BLE",
+      "status": "Validação",
+      "statusClass": "validate",
+      "priority": "Alta",
+      "progress": 22,
+      "roadmap": "MVP AFSK/KISS",
+      "current": "esp32-afsk adotado como candidato principal para o núcleo AFSK",
+      "architecture": "Rádio ↔ áudio/PTT ↔ ESP32-S3 ↔ AFSK ↔ AX.25 ↔ KISS ↔ BLE/USB",
+      "next": "Validar RX/TX AFSK real no ESP32-S3 antes de expandir BLE, caixa e recursos.",
+      "action": "Montar bancada mínima e provar RX + TX AFSK.",
+      "subprojects": [
+        "AFSK core",
+        "Áudio/PTT",
+        "KISS",
+        "BLE/USB",
+        "Box/Mobilinkd-like"
+      ]
+    },
+    {
+      "id": "aprsd-smsbr",
+      "name": "aprsd-smsbr-plugin",
+      "category": "radio",
+      "kind": "Open source • APRS → SMS Brasil",
+      "status": "Em construção",
+      "statusClass": "build",
+      "priority": "Média",
+      "progress": 16,
+      "roadmap": "F2",
+      "current": "Repositório criado e remoto SSH configurado; F2 em andamento",
+      "architecture": "APRSD/Direwolf → plugin SMS-BR",
+      "next": "Fechar primeiro caminho funcional de mensagem para o contexto brasileiro.",
+      "action": "Concluir entregáveis de F2 antes de ampliar integrações.",
+      "subprojects": [
+        "Gateway APRS→SMS",
+        "Compatibilidade APRSD",
+        "Compatibilidade Direwolf"
+      ]
+    },
+    {
+      "id": "quansheng-k1-fw",
+      "name": "Quansheng K1 Firmware",
+      "category": "radio",
+      "kind": "Firmware • Fork K1/UV-K5 • foco rádio/satélite",
+      "status": "Pesquisa / arquitetura",
+      "statusClass": "plan",
+      "priority": "Média",
+      "progress": 10,
+      "roadmap": "Fork próprio a estruturar",
+      "current": "Levantamento de forks, recursos do K1 2MB e possibilidades para operação satélite/APRS",
+      "architecture": "Firmware comunitário/fork → recursos K1 → integração com DigiRig/RadioLink",
+      "next": "Escolher base de fork, montar toolchain reproduzível e gerar primeira build própria sem alterações.",
+      "action": "Definir repositório-base e validar compilação + gravação segura no K1.",
+      "subprojects": [
+        "Satélite",
+        "Beacon/RF Log",
+        "FOX Hunt",
+        "DW/DWR",
+        "Integração DigiRig"
+      ]
+    },
+    {
+      "id": "esp32-adblocker",
+      "name": "ESP32 AdBlocker",
+      "category": "hardware",
+      "kind": "Rede doméstica • ESP32-S3 • DNS sinkhole",
+      "status": "Operacional / validação",
+      "statusClass": "ops",
+      "priority": "Média",
+      "progress": 78,
+      "roadmap": "ESP32_AdBlocker 3.4",
+      "current": "DNS 192.168.100.95 ativo; AP+STA; bloqueio e resolução normal validados",
+      "architecture": "ESP32-S3 N16R8 → DNS local → bloqueio por domínio",
+      "next": "Validar estabilidade contínua, reinício e evolução do gerenciamento de blocklists.",
+      "action": "Executar teste de estabilidade e documentar recuperação/atualização.",
+      "subprojects": [
+        "DNS sinkhole",
+        "AP+STA",
+        "Blocklists",
+        "Interface de setup",
+        "Persistência"
+      ]
+    },
+    {
+      "id": "satops",
+      "name": "SatOps",
+      "category": "saas",
+      "kind": "Produto SaaS educacional • WordPress / Elementor",
+      "status": "Operacional + evolução",
+      "statusClass": "ops",
+      "priority": "Alta",
+      "progress": 68,
+      "roadmap": "Produto ativo + integração F17",
+      "current": "Curso, login e cobrança Pix parcialmente operacionais; integração com plataforma em andamento",
+      "architecture": "WordPress + Elementor Pro + membership + ASAAS",
+      "next": "Consolidar SatOps dentro da arquitetura compartilhada e priorizar recursos de maior impacto.",
+      "action": "Fechar inventário/integração F17 e ordenar backlog.",
+      "subprojects": [
+        "SatOps Academy",
+        "SatOps Lab",
+        "SatOps News",
+        "AI Search / AI Tutor",
+        "Dashboard gamificado",
+        "Billing ASAAS"
+      ]
+    },
+    {
+      "id": "studyos",
+      "name": "StudyOS",
+      "category": "saas",
+      "kind": "SaaS educacional • Tutor / pais / alunos",
+      "status": "Protótipo",
+      "statusClass": "plan",
+      "priority": "Média",
+      "progress": 18,
+      "roadmap": "MVP + F18 integração futura",
+      "current": "Protótipo HTML e roadmap estruturados; migração WordPress planejada",
+      "architecture": "WordPress + Elementor Pro + plugin core + autenticação/cobrança reaproveitadas",
+      "next": "Transformar o protótipo em MVP funcional.",
+      "action": "Fechar escopo mínimo do MVP e iniciar implementação.",
+      "subprojects": [
+        "Roadmap Master",
+        "Rotina Diária",
+        "Study OS",
+        "Student Intelligence",
+        "Portfólio/relatórios"
+      ]
+    },
+    {
+      "id": "saas-platform",
+      "name": "SaaS Engineering Platform",
+      "category": "saas",
+      "kind": "Plataforma-base • monorepo",
+      "status": "Fundação ativa",
+      "statusClass": "build",
+      "priority": "Alta",
+      "progress": 21,
+      "roadmap": "F0–F20",
+      "current": "v0.2.0; F0.2/F0.3 concluídas; SatOps Integration F17 em andamento",
+      "architecture": "products/ + packages/ + infrastructure/ + tooling/",
+      "next": "Validar arquitetura compartilhada usando o SatOps como primeiro produto real.",
+      "action": "Continuar F17 sem abstrações prematuras.",
+      "subprojects": [
+        "SatOps Integration F17",
+        "StudyOS Integration F18",
+        "Production Readiness F19",
+        "AI & Knowledge Retrieval F20"
+      ]
+    },
+    {
+      "id": "abe-joshua-estudos",
+      "name": "Abe Joshua — Estudos",
+      "category": "education",
+      "kind": "Educação • acompanhamento acadêmico e rotina de estudos",
+      "status": "Em andamento",
+      "statusClass": "build",
+      "priority": "Alta",
+      "progress": 34,
+      "roadmap": "Formação acadêmica contínua",
+      "current": "Rotina de estudos em desenvolvimento, com trilhas de Matemática, Português e planejamento acadêmico de médio prazo",
+      "architecture": "Currículo → rotina diária → estudo guiado → exercícios/revisões → acompanhamento → próximos marcos",
+      "next": "Consolidar um painel acadêmico simples com disciplinas, metas semanais, progresso e próximos conteúdos.",
+      "action": "Definir a semana-base de estudos e registrar progresso por disciplina.",
+      "subprojects": [
+        "Matemática de Singapura",
+        "Português",
+        "Rotina de estudos",
+        "Revisões e caderno de erros",
+        "Planejamento escolar",
+        "GameDev como trilha complementar"
+      ]
+    },
+    {
+      "id": "gamedev-12",
+      "name": "GameDev 12 v1.0",
+      "category": "education",
+      "kind": "Educação digital • ChatGPT interativo",
+      "status": "Piloto",
+      "statusClass": "validate",
+      "priority": "Média",
+      "progress": 22,
+      "roadmap": "Validação do modelo",
+      "current": "Instruções do projeto estruturadas; chat interativo primeiro",
+      "architecture": "ChatGPT → instruções → desafios → acompanhamento → plataforma futura",
+      "next": "Validar um ciclo completo antes de investir em sistema dedicado.",
+      "action": "Executar primeiro ciclo completo e registrar atritos.",
+      "subprojects": [
+        "Trilha de programação",
+        "Projetos de jogos",
+        "Checkpoints",
+        "Acompanhamento"
+      ]
+    },
+    {
+      "id": "mae-leitora",
+      "name": "Mãe Leitora — Adriana Muniz",
+      "category": "adriana",
+      "kind": "Educação / conteúdo • Knowledge Base própria",
+      "status": "Estruturado / evolução",
+      "statusClass": "build",
+      "priority": "Alta",
+      "progress": 42,
+      "roadmap": "Ecossistema educacional",
+      "current": "Base Mestre e Knowledge Base canônica estruturadas; frentes de conteúdo e produtos definidas",
+      "architecture": "Knowledge Base → materiais → conteúdo → comunidade/produtos",
+      "next": "Transformar a base estruturada em calendário de produção e produtos educacionais recorrentes.",
+      "action": "Priorizar a próxima entrega do ecossistema e conectá-la ao calendário editorial.",
+      "subprojects": [
+        "Clube de Leitura",
+        "Comunidade de mães leitoras",
+        "Pré-alfabetização",
+        "Caligrafia",
+        "Lista de livros",
+        "Conteúdo Instagram/YouTube"
+      ]
+    },
+    {
+      "id": "abecedario-silabario",
+      "name": "Abecedário Fônico + Silabário",
+      "category": "adriana",
+      "kind": "Material didático • alfabetização fônica",
+      "status": "Em produção",
+      "statusClass": "build",
+      "priority": "Alta",
+      "progress": 52,
+      "roadmap": "Abecedário → Silabário",
+      "current": "Abecedário fônico já serve de base; segunda parte (silabário) está sendo adaptada para uma página por letra",
+      "architecture": "Princípio fônico → letra/som → sílabas → palavras → prática guiada",
+      "next": "Fechar o modelo pedagógico/visual de uma letra e replicar consistentemente no restante do silabário.",
+      "action": "Concluir página-modelo definitiva e usá-la como template para todas as letras.",
+      "subprojects": [
+        "Abecedário Fônico",
+        "Silabário",
+        "Modelo por letra",
+        "Ilustrações",
+        "Atividades fônicas"
+      ]
+    },
+    {
+      "id": "knowledge-base-standard",
+      "name": "Knowledge Base Standard v1",
+      "category": "meta",
+      "kind": "Infraestrutura de conhecimento • padrão transversal",
+      "status": "Estruturado",
+      "statusClass": "validate",
+      "priority": "Média",
+      "progress": 38,
+      "roadmap": "Padrão v1",
+      "current": "Padrão de ingestão, classificação, Markdown/YAML, índice e pacotes por projeto definido",
+      "architecture": "Fontes → ingestão → classificação → KB por projeto → recuperação",
+      "next": "Aplicar o padrão de forma consistente aos projetos prioritários e validar manutenção.",
+      "action": "Escolher projetos-piloto e consolidar o fluxo de atualização.",
+      "subprojects": [
+        "Mãe Leitora KB",
+        "SaaS KB",
+        "Projetos técnicos",
+        "Índices e fontes"
+      ]
+    }
+  ]
+}
