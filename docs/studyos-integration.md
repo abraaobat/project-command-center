@@ -36,7 +36,7 @@ The child initiatives remain separately trackable because they have their own pr
 
 ## Data contract
 
-`data/projects.json` supports the following optional fields:
+`data/projects.json` supports optional parent/child and runtime metadata.
 
 ### Parent relationship
 
@@ -47,11 +47,7 @@ The child initiatives remain separately trackable because they have their own pr
 }
 ```
 
-`parentId` references another project ID in the same dataset. `relationshipLabel` is presentation text only and must not be treated as authorization or product-domain data.
-
 ### Child list
-
-Parent projects may declare children for explicit documentation:
 
 ```json
 {
@@ -59,17 +55,15 @@ Parent projects may declare children for explicit documentation:
 }
 ```
 
-The UI currently derives the visible relationship from child `parentId`; `children` is descriptive and useful for external tooling.
-
 ### Runtime metadata
 
 ```json
 {
   "runtime": {
     "label": "StudyOS Local",
-    "url": "http://localhost:8788",
-    "status": "planned",
-    "note": "Runtime local ainda não implementado."
+    "url": "http://localhost:8788/orientador",
+    "status": "available",
+    "note": "Validado em Mac ↔ tablet; runtime local operacional enquanto o serviço estiver iniciado."
   }
 }
 ```
@@ -79,16 +73,40 @@ Supported UI states:
 - `planned`: display the target runtime and note, but do not provide an operational launch action;
 - `available`: display an actionable link to open the runtime.
 
-A runtime must not be promoted to `available` merely because a URL was reserved. It requires a real server to be running and the applicable validation to have passed.
+A runtime must not be promoted to `available` merely because a URL was reserved. StudyOS was promoted only after the real service ran on the Mac, a tablet joined through the local pairing flow, and routine changes made on the tablet were reflected on the Orientador dashboard.
+
+## Validated StudyOS Local flow
+
+On 2026-09-08 the first physical cross-device vertical slice passed:
+
+```text
+Tablet / Estudante
+        |
+        | check / uncheck routine item
+        v
+StudyOS Local :8788
+server-side state
+        |
+        v
+Mac / Orientador
+updated dashboard state
+```
+
+Validated facts:
+
+- Mac opened the Orientador dashboard on `localhost:8788`;
+- LAN access reached the same StudyOS instance;
+- an unpaired device was correctly blocked by the local access gate;
+- the tablet was paired using the tokenized access link copied from the Orientador dashboard;
+- the Estudante dashboard opened on the tablet;
+- student routine changes produced the corresponding state change on the Orientador dashboard immediately;
+- authoritative routine state remains owned by StudyOS, not by Project Command Center.
+
+The LAN IP is dynamic and must not be stored as a permanent project setting.
 
 ## StudyOS filter
 
-The dashboard exposes a `StudyOS` filter. It includes:
-
-- the StudyOS parent card;
-- all projects whose `parentId` is `studyos`.
-
-This provides a focused product view while preserving the global project inventory.
+The dashboard exposes a `StudyOS` filter. It includes the StudyOS parent card and projects whose `parentId` is `studyos`.
 
 ## Ownership boundaries
 
@@ -114,15 +132,15 @@ StudyOS owns:
 
 No student progress should be copied into Command Center JSON as an authoritative educational record. The Command Center may later consume a read-only StudyOS summary endpoint, but StudyOS remains the source of truth.
 
-## Planned evolution
+## Next evolution
 
-After the StudyOS Local Pilot is implemented and validated:
+With the local runtime validated and marked `available`:
 
-1. mark the StudyOS runtime as `available`;
-2. expose the launch link in the StudyOS card;
-3. optionally add a read-only health/status check;
-4. later consume a minimal summary API for high-level StudyOS status without duplicating private student data;
-5. keep detailed educational dashboards inside StudyOS.
+1. keep the launch action in the StudyOS card;
+2. optionally add a read-only health/status probe;
+3. later consume only a minimal high-level StudyOS summary API;
+4. keep detailed educational dashboards inside StudyOS;
+5. never persist dynamic LAN addresses or private student-detail state in Command Center data.
 
 ## Security and privacy
 
@@ -138,7 +156,7 @@ The Command Center must not become a second database for private student informa
 
 As of 2026-09-08:
 
-- StudyOS Local Pilot is documented but not yet running;
-- `8788` is a reserved local target, not an operational service;
-- the Project Command Center integration is a control-plane/UI preparation;
-- the next technical milestone is the reproducible StudyOS local runtime and Mac ↔ tablet synchronization validation.
+- StudyOS Local Pilot is operational on `:8788` when the local service is running;
+- the first real Mac ↔ tablet synchronization flow is validated;
+- Project Command Center may show StudyOS Local as `available` and provide its launch link;
+- the next StudyOS milestone is deeper domain migration: full Learning Plan/routine normalization, generic Student profile and the first real GameDev session record.
