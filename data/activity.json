@@ -3,6 +3,18 @@
   "items": [
     {
       "date": "2026-09-08",
+      "project": "Book & Document Ingestion",
+      "type": "project_added",
+      "text": "Módulo de ingestão de livros e documentos adicionado como projeto próprio no dashboard, vinculado ao Knowledge Extraction System."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "Video & YouTube Ingestion",
+      "type": "project_added",
+      "text": "Módulo de ingestão de vídeos, playlists e canais do YouTube adicionado como projeto próprio no dashboard, vinculado ao Knowledge Extraction System."
+    },
+    {
+      "date": "2026-09-08",
       "project": "Knowledge Extraction System",
       "type": "architecture",
       "text": "Book/Document Ingestion e Video/YouTube Ingestion foram consolidados em um único sistema KES v1, com Canonical Knowledge Package, Quality Gates, schema de manifesto e plano de pilotos."
