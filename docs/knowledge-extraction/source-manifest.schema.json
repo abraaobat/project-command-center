@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/abraaobat/project-command-center/docs/knowledge-extraction/source-manifest.schema.json",
+  "title": "KES Source Manifest v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "source_id",
+    "source_type",
+    "title",
+    "language",
+    "canonical_ref",
+    "acquired_at",
+    "pipeline_version",
+    "extraction_method"
+  ],
+  "properties": {
+    "schema_version": {"const": "kes-source-1"},
+    "source_id": {"type": "string", "minLength": 3},
+    "source_type": {
+      "enum": ["book", "document", "article", "video", "playlist", "channel", "podcast_video"]
+    },
+    "title": {"type": "string", "minLength": 1},
+    "creator": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "language": {"type": "string", "minLength": 2},
+    "canonical_ref": {"type": "string", "minLength": 1},
+    "acquired_at": {"type": "string", "format": "date-time"},
+    "published_at": {"type": ["string", "null"]},
+    "pipeline_version": {"type": "string", "minLength": 1},
+    "extraction_method": {
+      "enum": ["native-text", "pdf-text", "ocr", "captions-official", "captions-platform", "asr", "mixed", "manual"]
+    },
+    "source_checksum": {"type": ["string", "null"]},
+    "platform_id": {"type": ["string", "null"]},
+    "parent_collection_id": {"type": ["string", "null"]},
+    "license_or_access": {"type": ["string", "null"]},
+    "notes": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
