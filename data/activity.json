@@ -4,6 +4,24 @@
     {
       "date": "2026-09-08",
       "project": "StudyOS",
+      "type": "feature",
+      "text": "Materiais reais de Álgebra foram integrados ao StudyOS: playlist do YouTube, curso da Khan Academy e série de apoio do Prime Video."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "Premiere Mobile — iPad",
+      "type": "project_added",
+      "text": "Novo Learning Program do StudyOS criado com 8 semanas, 24 sessões e projeto final audiovisual; primeira sessão real ainda pendente."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "StudyOS",
+      "type": "feature",
+      "text": "Primeiro slice de notificações do Orientador foi implementado e permanece em validação física no macOS; presença/last-seen do tablet avançou para implementação em branch própria."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "StudyOS",
       "type": "validation",
       "text": "StudyOS Local :8788 validado em Mac ↔ tablet: o estudante acessou pelo pareamento local, alterou a rotina e o Dashboard Orientador refletiu imediatamente as mudanças. Runtime promovido para available."
     },
