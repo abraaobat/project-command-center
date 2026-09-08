@@ -5,6 +5,18 @@
       "date": "2026-09-08",
       "project": "Project Command Center",
       "type": "ui",
+      "text": "Dashboard v4.4 passa a mostrar relações pai/filho e estado de runtimes locais; foi adicionado filtro StudyOS e suporte a runtime planejado/operacional."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "StudyOS",
+      "type": "architecture",
+      "text": "StudyOS passou a ser o projeto-pai do Local Pilot: Abe Joshua — Estudos foi vinculado como primeiro Learning Plan real e GameDev 12 como primeiro Learning Program. A porta 8788 foi registrada como runtime planejado, ainda não operacional."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "Project Command Center",
+      "type": "ui",
       "text": "A lista de projetos passou a ser ordenada automaticamente por progresso, do maior para o menor; a ordem se reajusta sempre que um percentual muda."
     },
     {

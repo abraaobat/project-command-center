@@ -1,7 +1,6 @@
-# Project Command Center v4.1
+# Project Command Center v4.4
 
-Painel mestre vivo para acompanhar os projetos, progresso estimado, fase atual,
-próximo marco e atividade recente.
+Painel mestre vivo para acompanhar projetos, progresso estimado, fase atual, próximo marco, relações entre iniciativas e atividade recente.
 
 ## Primeira instalação no Mac
 
@@ -41,7 +40,7 @@ Enquanto estiver aberto:
 
 ## Fonte de dados
 
-- `data/projects.json` — estado atual dos projetos.
+- `data/projects.json` — estado atual, relações pai/filho e runtimes dos projetos.
 - `data/activity.json` — histórico recente.
 - `scripts/update_project.py` — atualização manual opcional.
 
@@ -63,6 +62,52 @@ git commit -m "chore: update RadioNode-BR status"
 git push
 ```
 
+## Relações entre projetos
+
+A partir da v4.4, o dashboard pode representar iniciativas subordinadas por meio de `parentId` e `relationshipLabel` em `data/projects.json`.
+
+Exemplo conceitual:
+
+```text
+StudyOS
+├── Abe Joshua — Estudos  → primeiro aluno real / Learning Plan
+└── GameDev 12            → Learning Program
+```
+
+As iniciativas filhas continuam visíveis como projetos próprios para acompanhamento operacional, mas o dashboard também mostra explicitamente sua relação com o projeto-pai.
+
+## StudyOS Local Pilot
+
+O StudyOS passa a ser acompanhado como produto-pai do piloto educacional real.
+
+Estado documentado:
+
+- Project Command Center permanece em `http://localhost:8787`;
+- StudyOS Local foi reservado para `http://localhost:8788`;
+- o runtime `8788` ainda não é considerado operacional até implementação e validação reais;
+- Abe Joshua — Estudos é o primeiro Learning Plan real do StudyOS;
+- GameDev 12 é o primeiro Learning Program do StudyOS;
+- o próximo marco é validar sincronização entre dashboard do orientador no Mac e dashboard do estudante no tablet.
+
+Use o filtro **StudyOS** no painel para visualizar o projeto-pai e suas iniciativas relacionadas.
+
+O card de um projeto pode declarar um bloco `runtime`:
+
+```json
+{
+  "runtime": {
+    "label": "StudyOS Local",
+    "url": "http://localhost:8788",
+    "status": "planned",
+    "note": "Runtime local ainda não implementado."
+  }
+}
+```
+
+Quando o runtime for validado, `status` pode ser promovido para `available`; então o dashboard passa a apresentar um link de abertura.
+
+Documentação específica: `docs/studyos-integration.md`.
+
 ## Knowledge Extraction System
 
 Os antigos fluxos separados de ingestão de livros/documentos e vídeo/YouTube foram consolidados no **Knowledge Extraction System (KES) v1**.
@@ -81,6 +126,6 @@ O KES é infraestrutura transversal para Mãe Leitora, SatOps, StudyOS e bases t
 
 ## Atualizações via ChatGPT
 
-O Project Command Center é a fonte central de acompanhamento. Alterações relevantes
-nos projetos devem atualizar o estado correspondente em `data/projects.json` e
-registrar uma entrada em `data/activity.json`.
+O Project Command Center é a fonte central de acompanhamento. Alterações relevantes nos projetos devem atualizar o estado correspondente em `data/projects.json` e registrar uma entrada em `data/activity.json`.
+
+O dashboard não deve declarar runtime, deploy, teste ou integração como operacional antes de validação real.
