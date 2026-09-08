@@ -18,9 +18,11 @@ http://localhost:8788
         +-- Orientador experience
         +-- Estudante experience
         +-- shared server-side StudyOS data
+        +-- Learning Resources / Learning Programs
+        +-- companion capabilities under validation
 ```
 
-The Command Center is the project-control plane. StudyOS is the educational runtime.
+The Command Center is the project-control plane. StudyOS is the educational runtime and source of truth.
 
 ## Current hierarchy
 
@@ -28,11 +30,25 @@ The Command Center is the project-control plane. StudyOS is the educational runt
 StudyOS
 ├── Abe Joshua — Estudos
 │   └── relationship: first real student / Learning Plan
-└── GameDev 12
+├── GameDev 12
+│   └── relationship: Learning Program
+└── Premiere Mobile — iPad
     └── relationship: Learning Program
 ```
 
-The child initiatives remain separately trackable because they have their own progress and next actions, but their parent relationship must be visible in the UI.
+Algebra resources remain inside the Abe/StudyOS educational domain rather than becoming a separate portfolio project.
+
+## Current StudyOS capabilities tracked at portfolio level
+
+- Local runtime `:8788` operational when started;
+- Mac ↔ tablet routine synchronization validated;
+- Algebra resource bundle integrated: YouTube playlist, Khan Academy and Prime Video support series;
+- GameDev 12 represented as a Learning Program;
+- Premiere Mobile — iPad represented as a second Learning Program;
+- open-dashboard Orientador notifications implemented and pending real macOS validation;
+- student device presence/last-seen implemented in a separate validation branch;
+- precise geolocation remains planned until HTTPS/secure-context requirements are satisfied;
+- Ambient Dashboard ESP32-S3 remains a planned read-only companion.
 
 ## Data contract
 
@@ -51,7 +67,7 @@ The child initiatives remain separately trackable because they have their own pr
 
 ```json
 {
-  "children": ["abe-joshua-estudos", "gamedev-12"]
+  "children": ["abe-joshua-estudos", "gamedev-12", "premiere-mobile-ipad"]
 }
 ```
 
@@ -63,7 +79,7 @@ The child initiatives remain separately trackable because they have their own pr
     "label": "StudyOS Local",
     "url": "http://localhost:8788/orientador",
     "status": "available",
-    "note": "Validado em Mac ↔ tablet; runtime local operacional enquanto o serviço estiver iniciado."
+    "note": "Runtime local operacional; slices novos podem permanecer em validação."
   }
 }
 ```
@@ -104,6 +120,15 @@ Validated facts:
 
 The LAN IP is dynamic and must not be stored as a permanent project setting.
 
+## Presence, notifications and location boundary
+
+The Command Center may track implementation status for these capabilities, but must not ingest their private runtime data.
+
+- Notifications: only implementation/validation status belongs in the Command Center.
+- Presence/last-seen: only feature status belongs in the Command Center; live device presence stays in StudyOS.
+- Precise location: never persist coordinates or location history in Project Command Center data.
+- Ambient Display: track the companion project/milestone, not the private educational payload shown on the device.
+
 ## StudyOS filter
 
 The dashboard exposes a `StudyOS` filter. It includes the StudyOS parent card and projects whose `parentId` is `studyos`.
@@ -124,10 +149,13 @@ StudyOS owns:
 - student profiles;
 - routine data and history;
 - Learning Plan data;
+- learning resources;
 - study sessions;
-- GameDev/Learning Program progress;
+- Learning Program progress;
 - portfolio/evidence;
 - orientador/student permissions;
+- presence/last-seen;
+- precise location when implemented;
 - Student Intelligence.
 
 No student progress should be copied into Command Center JSON as an authoritative educational record. The Command Center may later consume a read-only StudyOS summary endpoint, but StudyOS remains the source of truth.
@@ -136,17 +164,21 @@ No student progress should be copied into Command Center JSON as an authoritativ
 
 With the local runtime validated and marked `available`:
 
-1. keep the launch action in the StudyOS card;
-2. optionally add a read-only health/status probe;
-3. later consume only a minimal high-level StudyOS summary API;
-4. keep detailed educational dashboards inside StudyOS;
-5. never persist dynamic LAN addresses or private student-detail state in Command Center data.
+1. validate open-dashboard macOS notifications;
+2. validate student presence/last-seen on the real tablet/Mac pair;
+3. normalize the full Learning Plan and real Algebra Study Session contract;
+4. record the first GameDev and Premiere sessions;
+5. prepare HTTPS before precise browser geolocation;
+6. later add a minimal read-only StudyOS health/summary integration;
+7. keep detailed educational dashboards inside StudyOS.
 
 ## Security and privacy
 
 The Command Center must not become a second database for private student information. In particular:
 
 - do not store detailed routine logs or grades in `projects.json`;
+- do not store device presence timestamps as an operational feed;
+- do not store precise student location;
 - do not expose private StudyOS API data through the static dashboard;
 - avoid recording sensitive information about minors in activity logs;
 - local URLs do not imply internet exposure;
@@ -158,5 +190,7 @@ As of 2026-09-08:
 
 - StudyOS Local Pilot is operational on `:8788` when the local service is running;
 - the first real Mac ↔ tablet synchronization flow is validated;
-- Project Command Center may show StudyOS Local as `available` and provide its launch link;
-- the next StudyOS milestone is deeper domain migration: full Learning Plan/routine normalization, generic Student profile and the first real GameDev session record.
+- Algebra resources and Premiere Mobile — iPad are integrated into StudyOS;
+- notifications are implemented and awaiting physical macOS validation;
+- presence/last-seen has an implementation branch and requires physical validation;
+- precise GPS and Ambient Dashboard remain planned follow-up capabilities.
