@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "projects": [
+    {
+      "id": "book-document-ingestion",
+      "name": "Book & Document Ingestion",
+      "category": "meta",
+      "kind": "Knowledge Extraction • módulo do KES",
+      "status": "Padrão formalizado / piloto pendente",
+      "statusClass": "validate",
+      "priority": "Alta",
+      "progress": 70,
+      "roadmap": "KES v1 • Pilot A",
+      "current": "Pipeline para livros, PDFs, EPUBs, DOCX e artigos formalizado; saída alinhada ao Canonical Knowledge Package e aos Quality Gates.",
+      "architecture": "Source → Acquire → Extract → Normalize → Segment → Enrich → Validate → CKP",
+      "next": "Executar um livro/documento completo como Pilot A e medir cobertura, proveniência, segmentação e qualidade dos derivados.",
+      "action": "Selecionar a fonte-piloto e executar o pipeline completo de ponta a ponta.",
+      "subprojects": [
+        "Source preservation",
+        "Text/structure extraction",
+        "Page/section anchors",
+        "Normalization",
+        "Semantic segmentation",
+        "Summaries/concepts/glossary/Q&A",
+        "Quality Gates"
+      ]
+    },
+    {
+      "id": "video-youtube-ingestion",
+      "name": "Video & YouTube Ingestion",
+      "category": "meta",
+      "kind": "Knowledge Extraction • módulo do KES",
+      "status": "Padrão formalizado / piloto pendente",
+      "statusClass": "validate",
+      "priority": "Alta",
+      "progress": 58,
+      "roadmap": "KES v1 • Pilot B",
+      "current": "Pipeline para vídeos, playlists, canais, entrevistas e podcasts em vídeo formalizado, usando IDs e timestamps como âncoras estáveis e saída no mesmo CKP dos documentos.",
+      "architecture": "Channel/Video → Acquire metadata/transcript → Normalize → Timestamp segments → Enrich → Validate → CKP",
+      "next": "Executar um canal ou playlist representativa como Pilot B e avaliar cobertura, duplicação, timestamps, contexto entre vídeos e recuperação.",
+      "action": "Usar um canal/playlist piloto e executar ingestão incremental com manifestos por vídeo.",
+      "subprojects": [
+        "Channel/playlist inventory",
+        "Video metadata",
+        "Transcript acquisition",
+        "Timestamp anchors",
+        "Cross-video context",
+        "Incremental ingestion",
+        "Quality Gates"
+      ]
+    }
+  ]
+}
