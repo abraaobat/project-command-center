@@ -1,4 +1,4 @@
-# Project Command Center v4
+# Project Command Center v4.1
 
 Painel mestre vivo para acompanhar os projetos, progresso estimado, fase atual,
 próximo marco e atividade recente.
@@ -48,7 +48,11 @@ Enquanto estiver aberto:
 Exemplo:
 
 ```bash
-python3 scripts/update_project.py radionode-br   --progress 30   --current "RX AFSK validado em bancada"   --next "Validar TX AFSK"   --activity "Primeiro RX AFSK real decodificado."
+python3 scripts/update_project.py radionode-br \
+  --progress 30 \
+  --current "RX AFSK validado em bancada" \
+  --next "Validar TX AFSK" \
+  --activity "Primeiro RX AFSK real decodificado."
 ```
 
 Depois:
@@ -59,8 +63,24 @@ git commit -m "chore: update RadioNode-BR status"
 git push
 ```
 
+## Knowledge Extraction System
+
+Os antigos fluxos separados de ingestão de livros/documentos e vídeo/YouTube foram consolidados no **Knowledge Extraction System (KES) v1**.
+
+Documentação principal:
+
+- `docs/knowledge-extraction/README.md`
+- `docs/knowledge-extraction/BOOK_DOCUMENT_V1.md`
+- `docs/knowledge-extraction/VIDEO_YOUTUBE_V1.md`
+- `docs/knowledge-extraction/CANONICAL_PACKAGE_V1.md`
+- `docs/knowledge-extraction/QUALITY_GATES_V1.md`
+- `docs/knowledge-extraction/source-manifest.schema.json`
+- `docs/knowledge-extraction/PILOT_PLAN_V1.md`
+
+O KES é infraestrutura transversal para Mãe Leitora, SatOps, StudyOS e bases técnicas.
+
 ## Atualizações via ChatGPT
 
-Depois que o repositório estiver criado e conectado, o Project Command Center pode
-ser usado como fonte central. Alterações relevantes nos projetos devem atualizar
-o estado do projeto e registrar uma entrada em `data/activity.json`.
+O Project Command Center é a fonte central de acompanhamento. Alterações relevantes
+nos projetos devem atualizar o estado correspondente em `data/projects.json` e
+registrar uma entrada em `data/activity.json`.
