@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-08T11:30:00-04:00",
+  "lastUpdated": "2026-09-08T13:08:00-04:00",
   "dashboardVersion": "4.4",
   "progressNote": "Percentuais são estimativas operacionais baseadas no estágio atual, entregáveis concluídos e próximo marco; não representam esforço linear.",
   "projects": [
@@ -104,22 +104,22 @@
       "name": "StudyOS",
       "category": "saas",
       "kind": "SaaS educacional • Local Pilot → produto final",
-      "status": "Local Pilot definido",
-      "statusClass": "build",
+      "status": "Local Pilot operacional",
+      "statusClass": "ops",
       "priority": "Alta",
-      "progress": 24,
+      "progress": 34,
       "roadmap": "Local Pilot LP0.1–LP0.9 • F18",
-      "current": "Local Pilot documentado: Rotina Diária + Abe Joshua — Estudos + GameDev 12 consolidados sob o domínio StudyOS; runtime :8788 ainda não implementado.",
+      "current": "Runtime :8788 validado no Mac e tablet; o estudante altera a rotina e o Dashboard Orientador reflete imediatamente o mesmo estado server-side.",
       "architecture": "Orientador / Estudante → StudyOS UI → domínio/API → persistência server-side",
-      "next": "Implementar o runtime local reproduzível em :8788 e provar sincronização Mac ↔ tablet.",
-      "action": "Subir StudyOS Local e validar um check de rotina no tablet refletido no dashboard do orientador.",
+      "next": "Normalizar o Learning Plan e a rotina reais, implementar Student genérico e registrar a primeira sessão GameDev 12.",
+      "action": "Migrar dados reais do Abe para contratos persistentes e registrar a primeira sessão GameDev ponta a ponta.",
       "subprojects": ["StudyOS Local :8788", "Dashboard Orientador", "Dashboard Estudante", "Rotina Diária", "Abe Joshua — Estudos / Learning Plan", "GameDev 12 / Learning Program", "Student Intelligence"],
       "children": ["abe-joshua-estudos", "gamedev-12"],
       "runtime": {
         "label": "StudyOS Local",
-        "url": "http://localhost:8788",
-        "status": "planned",
-        "note": "Runtime local ainda não implementado."
+        "url": "http://localhost:8788/orientador",
+        "status": "available",
+        "note": "Validado em Mac ↔ tablet; runtime local operacional enquanto o serviço estiver iniciado."
       }
     },
     {
@@ -134,8 +134,8 @@
       "roadmap": "F0–F20",
       "current": "v0.2.0; F0.2/F0.3 concluídas; SatOps Integration F17 em andamento",
       "architecture": "products/ + packages/ + infrastructure/ + tooling/",
-      "next": "Validar arquitetura compartilhada usando o SatOps como primeiro produto real.",
-      "action": "Continuar F17 sem abstrações prematuras.",
+      "next": "Validar arquitetura compartilhada usando produtos reais sem abstrações prematuras.",
+      "action": "Continuar F17 e incorporar aprendizados do StudyOS Local Pilot em F18.",
       "subprojects": ["SatOps Integration F17", "StudyOS Integration F18", "Production Readiness F19", "AI & Knowledge Retrieval F20"]
     },
     {
@@ -146,12 +146,12 @@
       "status": "Integrando ao StudyOS",
       "statusClass": "build",
       "priority": "Alta",
-      "progress": 36,
+      "progress": 39,
       "roadmap": "Learning Plan • formação acadêmica contínua",
-      "current": "Roadmap e rotina do Abe passam a ser o primeiro conjunto de dados reais do StudyOS Local Pilot.",
+      "current": "A rotina diária já opera no StudyOS com persistência e sincronização Mac ↔ tablet; o roadmap de longo prazo ainda precisa ser normalizado no modelo persistente.",
       "architecture": "Student → Learning Plan → Routine → Study Sessions → Progress → Student Intelligence",
-      "next": "Representar a semana-base, rotina e metas atuais no modelo persistente do StudyOS.",
-      "action": "Migrar a rotina e o roadmap atuais para o primeiro vertical slice do StudyOS.",
+      "next": "Representar a semana-base, roadmap e metas atuais no modelo persistente genérico do StudyOS.",
+      "action": "Normalizar o Learning Plan e os dados atuais sem criar regras específicas para o Abe.",
       "subprojects": ["Matemática de Singapura", "Português", "Rotina Diária", "Revisões e caderno de erros", "Planejamento escolar", "GameDev 12"],
       "parentId": "studyos",
       "relationshipLabel": "Primeiro aluno real • Learning Plan"
@@ -166,7 +166,7 @@
       "priority": "Média",
       "progress": 24,
       "roadmap": "Learning Program • 24 semanas",
-      "current": "GameDev 12 foi classificado como o primeiro Learning Program do StudyOS; o chat continua como ambiente instrucional.",
+      "current": "GameDev 12 é o primeiro Learning Program do StudyOS; o chat continua como ambiente instrucional e o runtime já exibe seu resumo e próxima missão.",
       "architecture": "ChatGPT instrutor → registro de sessão → Learning Program → Progress / XP / Portfolio",
       "next": "Definir e validar o contrato de registro de uma sessão GameDev dentro do StudyOS.",
       "action": "Registrar uma sessão GameDev ponta a ponta no StudyOS Local Pilot.",
