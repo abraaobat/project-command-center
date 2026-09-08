@@ -3,6 +3,12 @@
   "items": [
     {
       "date": "2026-09-08",
+      "project": "Knowledge Extraction System",
+      "type": "architecture",
+      "text": "Book/Document Ingestion e Video/YouTube Ingestion foram consolidados em um único sistema KES v1, com Canonical Knowledge Package, Quality Gates, schema de manifesto e plano de pilotos."
+    },
+    {
+      "date": "2026-09-08",
       "project": "Project Command Center",
       "type": "system",
       "text": "Dashboard local confirmado como operacional no Mac em /Users/amb/Projects/project-command-center."
