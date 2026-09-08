@@ -3,6 +3,12 @@
   "items": [
     {
       "date": "2026-09-08",
+      "project": "Project Command Center",
+      "type": "ui",
+      "text": "A lista de projetos passou a ser ordenada automaticamente por progresso, do maior para o menor; a ordem se reajusta sempre que um percentual muda."
+    },
+    {
+      "date": "2026-09-08",
       "project": "Book & Document Ingestion",
       "type": "project_added",
       "text": "Módulo de ingestão de livros e documentos adicionado como projeto próprio no dashboard, vinculado ao Knowledge Extraction System."
