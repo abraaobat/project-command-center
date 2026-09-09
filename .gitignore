@@ -1,3 +1,5 @@
 .DS_Store
 __pycache__/
 *.pyc
+data/runtime-projects.json
+data/runtime-activity.json
