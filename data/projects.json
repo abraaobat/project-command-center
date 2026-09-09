@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-08T13:47:00-04:00",
+  "lastUpdated": "2026-09-08T22:16:00-04:00",
   "dashboardVersion": "4.4",
   "progressNote": "Percentuais são estimativas operacionais baseadas no estágio atual, entregáveis concluídos e próximo marco; não representam esforço linear.",
   "projects": [
@@ -104,22 +104,22 @@
       "name": "StudyOS",
       "category": "saas",
       "kind": "SaaS educacional • Local Pilot → produto final",
-      "status": "Local Pilot operacional + expansão",
+      "status": "Local Pilot operacional + presença validada",
       "statusClass": "ops",
       "priority": "Alta",
-      "progress": 40,
+      "progress": 44,
       "roadmap": "Local Pilot LP0.1–LP0.13 • F18",
-      "current": "Runtime :8788 operacional e sincronizado Mac ↔ tablet; materiais de Álgebra e Premiere Mobile integrados; notificações e presença/last-seen entram em validação.",
-      "architecture": "Orientador / Estudante → StudyOS UI → domínio/API → persistência server-side → companions",
-      "next": "Validar notificações e presença no dispositivo real, normalizar Learning Plan/Student e registrar as primeiras sessões GameDev e Premiere.",
-      "action": "Validar notificações + presença do tablet e iniciar registros reais de Study Sessions/Learning Programs.",
-      "subprojects": ["StudyOS Local :8788", "Dashboard Orientador", "Dashboard Estudante", "Rotina Diária", "Álgebra / Learning Resources", "Abe Joshua — Estudos / Learning Plan", "GameDev 12 / Learning Program", "Premiere Mobile — iPad", "Notificações", "Presença / last seen", "Student Intelligence", "Ambient Dashboard ESP32-S3"],
+      "current": "Runtime :8788 sincronizado Mac ↔ tablet; Álgebra e Premiere integrados; notificações no Mac e presença/last-seen foram validados em dispositivo real.",
+      "architecture": "Orientador / Estudante → StudyOS UI → domínio/API → persistência server-side → presença/notificações → companions",
+      "next": "Preparar HTTPS/secure origin para localização precisa e avançar nos contratos reais de Student, Learning Plan e Study Sessions.",
+      "action": "Implementar HTTPS do piloto e iniciar geolocalização explícita do tablet com retenção curta e acesso restrito ao Orientador.",
+      "subprojects": ["StudyOS Local :8788", "Dashboard Orientador", "Dashboard Estudante", "Rotina Diária", "Álgebra / Learning Resources", "Abe Joshua — Estudos / Learning Plan", "GameDev 12 / Learning Program", "Premiere Mobile — iPad", "Notificações ✓", "Presença / last seen ✓", "Localização HTTPS/GPS", "Student Intelligence", "Ambient Dashboard ESP32-S3"],
       "children": ["abe-joshua-estudos", "gamedev-12", "premiere-mobile-ipad"],
       "runtime": {
         "label": "StudyOS Local",
         "url": "http://localhost:8788/orientador",
         "status": "available",
-        "note": "Runtime local operacional; novos slices de notificação e presença ainda exigem validação física."
+        "note": "Runtime local operacional e validado em Mac ↔ tablet; notificações e presença/last-seen também validados."
       }
     },
     {

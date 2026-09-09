@@ -45,8 +45,9 @@ Algebra resources remain inside the Abe/StudyOS educational domain rather than b
 - Algebra resource bundle integrated: YouTube playlist, Khan Academy and Prime Video support series;
 - GameDev 12 represented as a Learning Program;
 - Premiere Mobile — iPad represented as a second Learning Program;
-- open-dashboard Orientador notifications implemented and pending real macOS validation;
-- student device presence/last-seen implemented in a separate validation branch;
+- open-dashboard Orientador notifications validated on the real Mac using service worker delivery;
+- student device presence/last-seen validated on the real tablet/Mac pair;
+- presence transition `ONLINE -> OFFLINE` confirmed after screen lock, tab closure and window minimization;
 - precise geolocation remains planned until HTTPS/secure-context requirements are satisfied;
 - Ambient Dashboard ESP32-S3 remains a planned read-only companion.
 
@@ -79,7 +80,7 @@ Algebra resources remain inside the Abe/StudyOS educational domain rather than b
     "label": "StudyOS Local",
     "url": "http://localhost:8788/orientador",
     "status": "available",
-    "note": "Runtime local operacional; slices novos podem permanecer em validação."
+    "note": "Runtime local operacional; notificações e presença/last-seen validados."
   }
 }
 ```
@@ -116,7 +117,9 @@ Validated facts:
 - the tablet was paired using the tokenized access link copied from the Orientador dashboard;
 - the Estudante dashboard opened on the tablet;
 - student routine changes produced the corresponding state change on the Orientador dashboard immediately;
-- authoritative routine state remains owned by StudyOS, not by Project Command Center.
+- authoritative routine state remains owned by StudyOS, not by Project Command Center;
+- open-dashboard notification delivery was accepted by the browser on the real Mac through the service worker path;
+- presence/last-seen correctly switched between online and offline on real devices after screen lock, tab closure and window minimization.
 
 The LAN IP is dynamic and must not be stored as a permanent project setting.
 
@@ -162,13 +165,13 @@ No student progress should be copied into Command Center JSON as an authoritativ
 
 ## Next evolution
 
-With the local runtime validated and marked `available`:
+With runtime, notifications and presence validated:
 
-1. validate open-dashboard macOS notifications;
-2. validate student presence/last-seen on the real tablet/Mac pair;
+1. prepare HTTPS/secure origin for the Local Pilot or deployed app;
+2. implement explicit-permission precise geolocation with bounded retention and Orientador-only access;
 3. normalize the full Learning Plan and real Algebra Study Session contract;
 4. record the first GameDev and Premiere sessions;
-5. prepare HTTPS before precise browser geolocation;
+5. later add Web Push for notifications with the dashboard/browser closed;
 6. later add a minimal read-only StudyOS health/summary integration;
 7. keep detailed educational dashboards inside StudyOS.
 
@@ -191,6 +194,6 @@ As of 2026-09-08:
 - StudyOS Local Pilot is operational on `:8788` when the local service is running;
 - the first real Mac ↔ tablet synchronization flow is validated;
 - Algebra resources and Premiere Mobile — iPad are integrated into StudyOS;
-- notifications are implemented and awaiting physical macOS validation;
-- presence/last-seen has an implementation branch and requires physical validation;
+- open-dashboard notifications are validated on the real Mac;
+- presence/last-seen is validated on the real tablet/Mac pair across screen lock, tab closure and window minimization;
 - precise GPS and Ambient Dashboard remain planned follow-up capabilities.
