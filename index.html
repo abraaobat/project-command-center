@@ -14,7 +14,7 @@
 <div class="controls"><button class="active" data-filter="all">Todos</button><button data-filter="studyos">StudyOS</button><button data-filter="radio">Rádio</button><button data-filter="saas">SaaS</button><button data-filter="adriana">Adriana</button><button data-filter="education">Educação</button><button data-filter="hardware">Hardware / Rede</button><button data-filter="meta">Conhecimento / Infra</button><button data-filter="high">Prioridade alta</button></div>
 <div id="grid" class="grid"></div>
 <div style="margin-top:18px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px"><div style="font-size:18px;font-weight:760;margin-bottom:10px">Atividade recente</div><div id="activity" class="small">carregando…</div></div>
-<div class="footer">Projetos ordenados automaticamente do maior para o menor progresso. Relações pai/filho e runtimes locais são lidos de <code>projects.json</code>. Atualização automática a cada 10 segundos. Checkboxes permanecem locais ao navegador.</div>
+<div class="footer">Projetos ordenados automaticamente do maior para o menor progresso. v4.5 prefere a visão local gerada pelo Auto Status Sync e usa <code>projects.json</code> como fallback seguro. Atualização visual a cada 10 segundos; fontes externas sincronizadas pelo launcher a cada ~60 segundos.</div>
 </div>
 <script>
 let data=null,filter='all';const esc=s=>(s??'').toString().replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
@@ -55,22 +55,35 @@ function render(){
  document.getElementById('progressNote').textContent=data.progressNote||'';
  grid.querySelectorAll('input[data-id]').forEach(cb=>cb.addEventListener('change',()=>localStorage.setItem('pc:'+cb.dataset.id,cb.checked?'1':'0')))
 }
+async function fetchJson(primary,fallback){
+ const t=Date.now();
+ try{
+  const r=await fetch(primary+'?t='+t,{cache:'no-store'});
+  if(r.ok)return await r.json();
+ }catch(e){}
+ const r=await fetch(fallback+'?t='+t,{cache:'no-store'});
+ if(!r.ok)throw new Error('Falha ao carregar '+fallback);
+ return await r.json();
+}
 async function load(){
  try{
   const t=Date.now();
-  const [baseRes,kesRes]=await Promise.all([fetch('data/projects.json?t='+t,{cache:'no-store'}),fetch('data/knowledge-extraction-projects.json?t='+t,{cache:'no-store'})]);
-  const fresh=await baseRes.json();const kes=await kesRes.json();
+  const [fresh,kesRes]=await Promise.all([fetchJson('data/runtime-projects.json','data/projects.json'),fetch('data/knowledge-extraction-projects.json?t='+t,{cache:'no-store'})]);
+  const kes=await kesRes.json();
   fresh.projects=[...(fresh.projects||[]),...(kes.projects||[])];
-  fresh.dashboardVersion=fresh.dashboardVersion||'4.4';
+  fresh.dashboardVersion=fresh.dashboardVersion||'4.5';
   const changed=JSON.stringify(fresh)!==JSON.stringify(data);data=fresh;
-  document.getElementById('liveText').textContent='sincronizado • '+new Date().toLocaleTimeString('pt-BR');
+  const sources=fresh.autoSync?.sources||[];
+  const ok=sources.filter(x=>x.status==='ok').length;
+  const syncLabel=sources.length?`auto sync ${ok}/${sources.length}`:'sincronizado';
+  document.getElementById('liveText').textContent=syncLabel+' • '+new Date().toLocaleTimeString('pt-BR');
   if(changed)render()
  }catch(e){document.getElementById('liveText').textContent='erro de sincronização'}
 }
 document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render()}));
 async function loadActivity(){
  try{
-  const r=await fetch('data/activity.json?t='+Date.now(),{cache:'no-store'});const a=await r.json();const box=document.getElementById('activity');const items=(a.items||[]).slice(0,8);
+  const a=await fetchJson('data/runtime-activity.json','data/activity.json');const box=document.getElementById('activity');const items=(a.items||[]).slice(0,8);
   box.innerHTML=items.map(x=>`<div style="padding:8px 0;border-bottom:1px solid var(--line)"><b style="color:var(--text)">${esc(x.project)}</b><span style="margin-left:7px">${esc(x.date)}</span><br><span>${esc(x.text)}</span></div>`).join('')||'Sem atividade registrada.'
  }catch(e){document.getElementById('activity').textContent='Sem acesso ao histórico.'}
 }

@@ -1,0 +1,26 @@
+name: Validate Auto Status Sync
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/sync_status_sources.py scripts/test_auto_status_sync.py
+
+      - name: Validate source config JSON
+        run: python -m json.tool data/status-sources.json >/dev/null
+
+      - name: Run Auto Status Sync unit tests
+        run: python scripts/test_auto_status_sync.py
