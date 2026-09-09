@@ -4,6 +4,12 @@
     {
       "date": "2026-09-08",
       "project": "StudyOS",
+      "type": "validation",
+      "text": "Notificações do Orientador e presença/last-seen foram validados em dispositivos reais. O tablet mudou corretamente ONLINE→OFFLINE em bloqueio de tela, fechamento de aba e minimização; o próximo marco é HTTPS + localização precisa."
+    },
+    {
+      "date": "2026-09-08",
+      "project": "StudyOS",
       "type": "feature",
       "text": "Materiais reais de Álgebra foram integrados ao StudyOS: playlist do YouTube, curso da Khan Academy e série de apoio do Prime Video."
     },
