@@ -31,11 +31,11 @@ gh auth login
 
 Cada projeto pode publicar um pequeno arquivo JSON no próprio repositório. O Project Command Center busca esse arquivo e aplica somente campos de portfólio permitidos ao card correspondente.
 
-A primeira fonte operacional é o StudyOS:
+Fluxo:
 
 ```text
-saas-engineering-platform
-└── products/studyos/project-status.json
+Projeto de origem
+└── project-status.json
             ↓
 GitHub / gh api
             ↓
@@ -51,7 +51,17 @@ Configuração das fontes:
 
 `data/status-sources.json`
 
-Exemplo:
+### Fontes automáticas atuais
+
+1. `studyos` → `abraaobat/saas-engineering-platform/products/studyos/project-status.json`
+2. `radiolink-mobile` → `abraaobat/radiolink-mobile/project-status.json`
+3. `radionode-br` → `abraaobat/radionode-br/project-status.json`
+4. `esp32-adblocker` → `abraaobat/ESP32_AdBlocker/project-status.json`
+5. `satops` → `abraaobat/saas-engineering-platform/products/satops/project-status.json`
+6. `saas-platform` → `abraaobat/saas-engineering-platform/project-status.json`
+7. `knowledge-extraction-system` → `abraaobat/project-command-center/data/status-contracts/knowledge-extraction-system.json`
+
+Exemplo de fonte:
 
 ```json
 {
@@ -83,10 +93,10 @@ O sincronizador não aceita que a fonte externa substitua identidade do projeto,
 python3 scripts/sync_status_sources.py
 ```
 
-Resultado esperado com a primeira fonte ativa:
+Resultado esperado com as sete fontes principais ativas:
 
 ```text
-Auto Status Sync: 1 fonte(s) OK, 0 falha(s).
+Auto Status Sync: 7 fonte(s) OK, 0 falha(s).
 Gerado: data/runtime-projects.json
 ```
 
@@ -112,7 +122,7 @@ Arquivos locais gerados automaticamente:
 - `data/runtime-projects.json`;
 - `data/runtime-activity.json`.
 
-A migração para fontes próprias é incremental. Projetos sem `project-status.json` continuam funcionando exatamente como na v4.4.
+A migração para fontes próprias é incremental. Projetos sem contrato machine-readable continuam funcionando pelo fallback estático.
 
 ## Relações entre projetos
 
@@ -144,11 +154,11 @@ Documentação específica: `docs/studyos-integration.md`.
 Para projetos que ainda não publicam status próprio:
 
 ```bash
-python3 scripts/update_project.py radionode-br \
-  --progress 30 \
-  --current "RX AFSK validado em bancada" \
-  --next "Validar TX AFSK" \
-  --activity "Primeiro RX AFSK real decodificado."
+python3 scripts/update_project.py aprsd-smsbr \
+  --progress 20 \
+  --current "Novo marco validado" \
+  --next "Próximo gate" \
+  --activity "Resumo da mudança."
 ```
 
 Depois faça commit/push normalmente.
