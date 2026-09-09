@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "projectId": "studyos",
+      "repository": "abraaobat/saas-engineering-platform",
+      "ref": "main",
+      "path": "products/studyos/project-status.json",
+      "enabled": true
+    }
+  ]
+}
