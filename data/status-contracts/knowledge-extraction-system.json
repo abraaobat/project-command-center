@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "projectId": "knowledge-extraction-system",
+  "updatedAt": "2026-09-08T22:45:00-04:00",
+  "status": "Padrão v1 consolidado",
+  "statusClass": "validate",
+  "progress": 62,
+  "roadmap": "KES v1 • Book/Document + Video/YouTube",
+  "current": "KES v1 está formalizado com pipelines Book/Document e Video/YouTube convergindo para Canonical Knowledge Package, Source Manifest e Quality Gates compartilhados.",
+  "architecture": "Source → Acquire → Extract → Normalize → Segment → Enrich → Validate → Package → Index/Retrieve",
+  "next": "Executar os dois pilotos definidos — um livro/documento e um canal/playlist — medir qualidade e fechar os ajustes do v1.",
+  "action": "Rodar Pilot A e Pilot B com os Quality Gates e registrar os resultados comparáveis.",
+  "subprojects": [
+    "Book & Document Ingestion",
+    "Video & YouTube Ingestion",
+    "Provenance & Source Manifest",
+    "Canonical Knowledge Package",
+    "Quality Gates",
+    "Retrieval-ready Indexes"
+  ],
+  "activity": {
+    "date": "2026-09-08",
+    "type": "architecture",
+    "text": "KES publishes its machine-readable project status; the next gate remains execution of the Book/Document and Video/YouTube pilots."
+  }
+}
