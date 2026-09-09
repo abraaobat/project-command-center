@@ -7,6 +7,48 @@
       "ref": "main",
       "path": "products/studyos/project-status.json",
       "enabled": true
+    },
+    {
+      "projectId": "radiolink-mobile",
+      "repository": "abraaobat/radiolink-mobile",
+      "ref": "main",
+      "path": "project-status.json",
+      "enabled": true
+    },
+    {
+      "projectId": "radionode-br",
+      "repository": "abraaobat/radionode-br",
+      "ref": "main",
+      "path": "project-status.json",
+      "enabled": true
+    },
+    {
+      "projectId": "esp32-adblocker",
+      "repository": "abraaobat/ESP32_AdBlocker",
+      "ref": "main",
+      "path": "project-status.json",
+      "enabled": true
+    },
+    {
+      "projectId": "satops",
+      "repository": "abraaobat/saas-engineering-platform",
+      "ref": "main",
+      "path": "products/satops/project-status.json",
+      "enabled": true
+    },
+    {
+      "projectId": "saas-platform",
+      "repository": "abraaobat/saas-engineering-platform",
+      "ref": "main",
+      "path": "project-status.json",
+      "enabled": true
+    },
+    {
+      "projectId": "knowledge-extraction-system",
+      "repository": "abraaobat/project-command-center",
+      "ref": "main",
+      "path": "data/status-contracts/knowledge-extraction-system.json",
+      "enabled": true
     }
   ]
 }
