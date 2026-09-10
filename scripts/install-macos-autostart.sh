@@ -41,7 +41,7 @@ stop_known_listener() {
   pid="$(lsof -tiTCP:"$port" -sTCP:LISTEN 2>/dev/null | head -n1 || true)"
   [[ -z "$pid" ]] && return 0
   cmd="$(ps -p "$pid" -o command= 2>/dev/null || true)"
-  cwd="$(lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p' | head -n1)"
+  cwd="$(lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p' | head -n1 || true)"
   if [[ "$cwd" == "$expected_cwd" && "$cmd" == *"$expected_fragment"* ]]; then
     echo "Encerrando processo manual conhecido em :$port (PID $pid)..."
     kill -TERM "$pid" 2>/dev/null || true
@@ -66,6 +66,8 @@ launchctl bootout "gui/$USER_ID" "$STUDYOS_PLIST" >/dev/null 2>&1 || true
 # Migra os processos iniciados manualmente para supervisão do launchd.
 stop_known_listener 8787 "$PROJECT_ROOT" "http.server 8787"
 stop_known_listener 8788 "$STUDYOS_ROOT" "node src/server.mjs"
+# O launcher antigo do StudyOS grava PID; o serviço launchd não usa esse arquivo.
+rm -f "$STUDYOS_ROOT/.local/server.pid"
 
 cat > "$PCC_PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
