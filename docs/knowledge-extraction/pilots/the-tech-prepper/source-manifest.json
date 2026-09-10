@@ -1,0 +1,24 @@
+{
+  "schema_version": "kes-source-1",
+  "source_id": "channel-the-tech-prepper",
+  "source_type": "channel",
+  "title": "The Tech Prepper",
+  "creator": [
+    "The Tech Prepper"
+  ],
+  "language": "en",
+  "canonical_ref": "https://www.youtube.com/@TheTechPrepper",
+  "acquired_at": "2026-09-10T19:20:00-04:00",
+  "published_at": null,
+  "pipeline_version": "kes-v1",
+  "extraction_method": "manual",
+  "source_checksum": null,
+  "platform_id": "youtube:@TheTechPrepper",
+  "parent_collection_id": null,
+  "license_or_access": "Public channel metadata; source-linked video/caption material must not be committed verbatim unless permitted.",
+  "notes": [
+    "Selected for Pilot B because the channel is already an architectural reference for RadioLink/off-grid communications.",
+    "Initial execution scope is an inventory plus 5-10 videos directly related to field/off-grid communications, radio workflows and digital modes.",
+    "Video-derived segments must retain video URL/id and timestamp anchors."
+  ]
+}
