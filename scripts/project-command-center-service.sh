@@ -5,6 +5,7 @@ PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PORT="${PCC_PORT:-8787}"
 PYTHON_BIN="${PCC_PYTHON_BIN:-$(command -v python3 || true)}"
 SYNC_PID=""
+SERVER_PID=""
 
 cd "$PROJECT_ROOT"
 
@@ -20,9 +21,15 @@ sync_status() {
 }
 
 cleanup() {
+  trap - EXIT INT TERM
+  if [[ -n "$SERVER_PID" ]]; then
+    kill "$SERVER_PID" >/dev/null 2>&1 || true
+  fi
   if [[ -n "$SYNC_PID" ]]; then
     kill "$SYNC_PID" >/dev/null 2>&1 || true
   fi
+  wait "$SERVER_PID" >/dev/null 2>&1 || true
+  wait "$SYNC_PID" >/dev/null 2>&1 || true
 }
 trap cleanup EXIT INT TERM
 
@@ -41,5 +48,8 @@ sync_status
 ) &
 SYNC_PID=$!
 
-# O servidor fica em foreground para o launchd supervisionar e reiniciar se necessário.
-exec "$PYTHON_BIN" -m http.server "$PORT"
+# O servidor fica como filho direto deste serviço; o shell permanece vivo para
+# encerrar também o loop de sincronização quando o launchd reiniciar o job.
+"$PYTHON_BIN" -m http.server "$PORT" &
+SERVER_PID=$!
+wait "$SERVER_PID"
