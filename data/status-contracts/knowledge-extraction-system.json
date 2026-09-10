@@ -1,26 +1,28 @@
 {
   "schemaVersion": 1,
   "projectId": "knowledge-extraction-system",
-  "updatedAt": "2026-09-08T22:45:00-04:00",
-  "status": "Padrão v1 consolidado",
+  "updatedAt": "2026-09-10T19:22:00-04:00",
+  "status": "KES v1 • pilotos selecionados + manifest CI",
   "statusClass": "validate",
-  "progress": 62,
+  "progress": 66,
   "roadmap": "KES v1 • Book/Document + Video/YouTube",
-  "current": "KES v1 está formalizado com pipelines Book/Document e Video/YouTube convergindo para Canonical Knowledge Package, Source Manifest e Quality Gates compartilhados.",
+  "current": "KES v1 agora possui fontes concretas para os dois pilotos e manifests versionados sob o schema canônico. Pilot A usa A Família Leitora, de Sarah Mackenzie, referenciada apenas por URI privada opaca; Pilot B usa o canal público The Tech Prepper. Um validador CI aplica JSON Schema, unicidade e regras de privacidade/proveniência sem versionar texto protegido ou IDs privados da Library.",
   "architecture": "Source → Acquire → Extract → Normalize → Segment → Enrich → Validate → Package → Index/Retrieve",
-  "next": "Executar os dois pilotos definidos — um livro/documento e um canal/playlist — medir qualidade e fechar os ajustes do v1.",
-  "action": "Rodar Pilot A e Pilot B com os Quality Gates e registrar os resultados comparáveis.",
+  "next": "Executar a extração privada do Pilot A com âncoras de página e o inventário inicial de 5–10 vídeos do Pilot B; depois gerar os primeiros Canonical Knowledge Packages e rodar os Quality Gates compartilhados.",
+  "action": "Rodar Pilot A e Pilot B mantendo fontes protegidas fora do Git e versionando somente manifests, metadados permitidos, métricas e artefatos derivados compatíveis com a política de acesso.",
   "subprojects": [
-    "Book & Document Ingestion",
-    "Video & YouTube Ingestion",
-    "Provenance & Source Manifest",
+    "Pilot A source selected ✓",
+    "Pilot B source selected ✓",
+    "Source Manifest CI ✓",
+    "Book & Document private extraction",
+    "Video / YouTube inventory",
     "Canonical Knowledge Package",
     "Quality Gates",
     "Retrieval-ready Indexes"
   ],
   "activity": {
-    "date": "2026-09-08",
-    "type": "architecture",
-    "text": "KES publishes its machine-readable project status; the next gate remains execution of the Book/Document and Video/YouTube pilots."
+    "date": "2026-09-10",
+    "type": "pilot-bootstrap",
+    "text": "Pilot A/B source manifests and repository privacy invariants were added; source content remains outside Git and actual extraction/inventory remains the next execution gate."
   }
 }
