@@ -20,6 +20,16 @@ sync_status() {
   fi
 }
 
+sync_git() {
+  [[ -d ".git" ]] || return 0
+  git remote get-url origin >/dev/null 2>&1 || return 0
+  local branch
+  branch="$(git branch --show-current 2>/dev/null || true)"
+  [[ -n "$branch" ]] || return 0
+  git fetch origin "$branch" >>/tmp/project-command-center-git.log 2>&1 || return 0
+  git merge --ff-only "origin/$branch" >>/tmp/project-command-center-git.log 2>&1 || true
+}
+
 cleanup() {
   trap - EXIT INT TERM
   if [[ -n "$SERVER_PID" ]]; then
@@ -39,9 +49,7 @@ sync_status
 # Mantém fontes locais/GitHub atualizadas sem depender de uma janela do Terminal.
 (
   while true; do
-    if [[ -d ".git" ]] && git remote get-url origin >/dev/null 2>&1; then
-      git pull --ff-only >>/tmp/project-command-center-git.log 2>&1 || true
-    fi
+    sync_git
     sync_status
     sleep 60
   done
