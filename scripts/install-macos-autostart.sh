@@ -4,33 +4,55 @@ set -euo pipefail
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
 resolve_saas_root() {
+  local preferred="$HOME/Projects/saas-engineering-platform"
+  local desktop_base="$HOME/Desktop/SAAS - Projetos"
+  local detected=""
+  local base=""
+  local pid=""
+  local cwd=""
+
   if [[ -n "${SAAS_ENGINEERING_ROOT:-}" ]]; then
     print -r -- "$SAAS_ENGINEERING_ROOT"
     return 0
   fi
 
-  local preferred="$HOME/Projects/saas-engineering-platform"
   if [[ -f "$preferred/products/studyos/src/server.mjs" ]]; then
     print -r -- "$preferred"
     return 0
   fi
 
+  # Melhor evidência: se o StudyOS já estiver ouvindo em :8788, usa o cwd real do processo.
+  pid="$(lsof -tiTCP:8788 -sTCP:LISTEN 2>/dev/null | head -n1 || true)"
+  if [[ -n "$pid" ]]; then
+    cwd="$(lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p' | head -n1 || true)"
+    if [[ -n "$cwd" && -f "$cwd/src/server.mjs" && "$cwd" == */products/studyos ]]; then
+      print -r -- "${cwd%/products/studyos}"
+      return 0
+    fi
+  fi
+
   # Compatibilidade com a localização histórica usada neste Mac.
-  local desktop_base="$HOME/Desktop/SAAS - Projetos"
   if [[ -d "$desktop_base" ]]; then
-    local detected
-    detected="$(find "$desktop_base" -maxdepth 4 -type f -path '*/saas-engineering-platform/products/studyos/src/server.mjs' -print -quit 2>/dev/null || true)"
+    detected="$(find "$desktop_base" -maxdepth 10 -type f -path '*/saas-engineering-platform/products/studyos/src/server.mjs' -print -quit 2>/dev/null || true)"
     if [[ -n "$detected" ]]; then
       print -r -- "${detected%/products/studyos/src/server.mjs}"
       return 0
     fi
   fi
 
-  # Último fallback: procura apenas em áreas comuns do usuário, sem varrer o disco inteiro.
-  local base detected
+  # Spotlight costuma ser mais rápido que varrer todo o HOME.
+  if command -v mdfind >/dev/null 2>&1; then
+    detected="$(mdfind -onlyin "$HOME" 'kMDItemFSName == "server.mjs"' 2>/dev/null | grep '/saas-engineering-platform/products/studyos/src/server.mjs$' | head -n1 || true)"
+    if [[ -n "$detected" ]]; then
+      print -r -- "${detected%/products/studyos/src/server.mjs}"
+      return 0
+    fi
+  fi
+
+  # Fallback controlado nas áreas comuns do usuário.
   for base in "$HOME/Projects" "$HOME/Desktop" "$HOME/Documents"; do
     [[ -d "$base" ]] || continue
-    detected="$(find "$base" -maxdepth 6 -type f -path '*/saas-engineering-platform/products/studyos/src/server.mjs' -print -quit 2>/dev/null || true)"
+    detected="$(find "$base" -maxdepth 10 -type f -path '*/saas-engineering-platform/products/studyos/src/server.mjs' -print -quit 2>/dev/null || true)"
     if [[ -n "$detected" ]]; then
       print -r -- "${detected%/products/studyos/src/server.mjs}"
       return 0
@@ -63,7 +85,10 @@ fi
 if [[ ! -f "$STUDYOS_ROOT/src/server.mjs" ]]; then
   echo "Erro: StudyOS não encontrado." >&2
   echo "Caminho testado: $STUDYOS_ROOT" >&2
-  echo "Você também pode informar manualmente: SAAS_ENGINEERING_ROOT=/caminho/saas-engineering-platform" >&2
+  echo "Localize com:" >&2
+  echo "  find \"$HOME\" -type f -path '*/saas-engineering-platform/products/studyos/src/server.mjs' -print 2>/dev/null | head" >&2
+  echo "Ou informe manualmente:" >&2
+  echo "  SAAS_ENGINEERING_ROOT=/caminho/saas-engineering-platform /bin/zsh scripts/install-macos-autostart.sh" >&2
   exit 1
 fi
 if [[ ! -s "$HOME/.nvm/nvm.sh" ]]; then
@@ -80,7 +105,9 @@ stop_known_listener() {
   local port="$1"
   local expected_cwd="$2"
   local expected_fragment="$3"
-  local pid cmd cwd
+  local pid=""
+  local cmd=""
+  local cwd=""
   pid="$(lsof -tiTCP:"$port" -sTCP:LISTEN 2>/dev/null | head -n1 || true)"
   [[ -z "$pid" ]] && return 0
   cmd="$(ps -p "$pid" -o command= 2>/dev/null || true)"
@@ -102,14 +129,11 @@ stop_known_listener() {
   fi
 }
 
-# Remove versões anteriores dos jobs, se existirem.
 launchctl bootout "gui/$USER_ID" "$PCC_PLIST" >/dev/null 2>&1 || true
 launchctl bootout "gui/$USER_ID" "$STUDYOS_PLIST" >/dev/null 2>&1 || true
 
-# Migra os processos iniciados manualmente para supervisão do launchd.
 stop_known_listener 8787 "$PROJECT_ROOT" "http.server 8787"
 stop_known_listener 8788 "$STUDYOS_ROOT" "node src/server.mjs"
-# O launcher antigo do StudyOS grava PID; o serviço launchd não usa esse arquivo.
 rm -f "$STUDYOS_ROOT/.local/server.pid"
 
 cat > "$PCC_PLIST" <<EOF
@@ -117,17 +141,10 @@ cat > "$PCC_PLIST" <<EOF
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key>
-  <string>$PCC_LABEL</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/bin/zsh</string>
-    <string>$PROJECT_ROOT/scripts/project-command-center-service.sh</string>
-  </array>
-  <key>WorkingDirectory</key>
-  <string>$PROJECT_ROOT</string>
-  <key>EnvironmentVariables</key>
-  <dict>
+  <key>Label</key><string>$PCC_LABEL</string>
+  <key>ProgramArguments</key><array><string>/bin/zsh</string><string>$PROJECT_ROOT/scripts/project-command-center-service.sh</string></array>
+  <key>WorkingDirectory</key><string>$PROJECT_ROOT</string>
+  <key>EnvironmentVariables</key><dict>
     <key>HOME</key><string>$HOME</string>
     <key>PATH</key><string>$BASE_PATH</string>
     <key>PCC_PORT</key><string>8787</string>
@@ -148,17 +165,10 @@ cat > "$STUDYOS_PLIST" <<EOF
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key>
-  <string>$STUDYOS_LABEL</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/bin/zsh</string>
-    <string>$PROJECT_ROOT/scripts/studyos-launchd-service.sh</string>
-  </array>
-  <key>WorkingDirectory</key>
-  <string>$STUDYOS_ROOT</string>
-  <key>EnvironmentVariables</key>
-  <dict>
+  <key>Label</key><string>$STUDYOS_LABEL</string>
+  <key>ProgramArguments</key><array><string>/bin/zsh</string><string>$PROJECT_ROOT/scripts/studyos-launchd-service.sh</string></array>
+  <key>WorkingDirectory</key><string>$STUDYOS_ROOT</string>
+  <key>EnvironmentVariables</key><dict>
     <key>HOME</key><string>$HOME</string>
     <key>PATH</key><string>$BASE_PATH</string>
     <key>NVM_DIR</key><string>$HOME/.nvm</string>
