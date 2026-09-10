@@ -1,0 +1,24 @@
+{
+  "schema_version": "kes-source-1",
+  "source_id": "book-mae-leitora-a-familia-leitora",
+  "source_type": "book",
+  "title": "A Família Leitora",
+  "creator": [
+    "Sarah Mackenzie"
+  ],
+  "language": "pt-BR",
+  "canonical_ref": "private-library://mae-leitora/a-familia-leitora",
+  "acquired_at": "2026-09-10T19:20:00-04:00",
+  "published_at": null,
+  "pipeline_version": "kes-v1",
+  "extraction_method": "pdf-text",
+  "source_checksum": null,
+  "platform_id": null,
+  "parent_collection_id": null,
+  "license_or_access": "Private user-provided Library copy; source text must not be committed to Git.",
+  "notes": [
+    "Selected for Pilot A because it is an existing Mãe Leitora reference and the private Library copy exposes extractable text.",
+    "Derived artifacts must retain source/page anchors; raw copyrighted book content stays outside the repository.",
+    "A less text-accessible Willingham copy remains a future OCR/fallback validation case, not the first pilot source."
+  ]
+}
