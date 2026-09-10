@@ -23,6 +23,13 @@
       "enabled": true
     },
     {
+      "projectId": "aprsd-smsbr",
+      "repository": "abraaobat/aprsd-smsbr-plugin",
+      "ref": "main",
+      "path": "project-status.json",
+      "enabled": true
+    },
+    {
       "projectId": "esp32-adblocker",
       "repository": "abraaobat/ESP32_AdBlocker",
       "ref": "main",
