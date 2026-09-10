@@ -38,16 +38,20 @@ cleanup() {
   if [[ -n "$SYNC_PID" ]]; then
     kill "$SYNC_PID" >/dev/null 2>&1 || true
   fi
-  wait "$SERVER_PID" >/dev/null 2>&1 || true
-  wait "$SYNC_PID" >/dev/null 2>&1 || true
+  [[ -n "$SERVER_PID" ]] && wait "$SERVER_PID" >/dev/null 2>&1 || true
+  [[ -n "$SYNC_PID" ]] && wait "$SYNC_PID" >/dev/null 2>&1 || true
 }
 trap cleanup EXIT INT TERM
 
-# Atualiza a visão runtime imediatamente.
-sync_status
+# Sobe o HTTP imediatamente. Sincronização de status/GitHub não deve atrasar
+# a disponibilidade do painel durante login, reboot ou restart do launchd.
+"$PYTHON_BIN" -m http.server "$PORT" &
+SERVER_PID=$!
 
-# Mantém fontes locais/GitHub atualizadas sem depender de uma janela do Terminal.
+# Mantém fontes locais/GitHub atualizadas em background. A primeira atualização
+# ocorre logo após o servidor já estar disponível.
 (
+  sync_status
   while true; do
     sync_git
     sync_status
@@ -56,8 +60,6 @@ sync_status
 ) &
 SYNC_PID=$!
 
-# O servidor fica como filho direto deste serviço; o shell permanece vivo para
-# encerrar também o loop de sincronização quando o launchd reiniciar o job.
-"$PYTHON_BIN" -m http.server "$PORT" &
-SERVER_PID=$!
+# O shell permanece vivo para o launchd supervisionar todo o conjunto e para
+# encerrar tanto servidor quanto sincronizador em um restart do job.
 wait "$SERVER_PID"
