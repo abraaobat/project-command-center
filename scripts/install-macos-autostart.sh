@@ -2,7 +2,45 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SAAS_ROOT="${SAAS_ENGINEERING_ROOT:-$HOME/Projects/saas-engineering-platform}"
+
+resolve_saas_root() {
+  if [[ -n "${SAAS_ENGINEERING_ROOT:-}" ]]; then
+    print -r -- "$SAAS_ENGINEERING_ROOT"
+    return 0
+  fi
+
+  local preferred="$HOME/Projects/saas-engineering-platform"
+  if [[ -f "$preferred/products/studyos/src/server.mjs" ]]; then
+    print -r -- "$preferred"
+    return 0
+  fi
+
+  # Compatibilidade com a localização histórica usada neste Mac.
+  local desktop_base="$HOME/Desktop/SAAS - Projetos"
+  if [[ -d "$desktop_base" ]]; then
+    local detected
+    detected="$(find "$desktop_base" -maxdepth 4 -type f -path '*/saas-engineering-platform/products/studyos/src/server.mjs' -print -quit 2>/dev/null || true)"
+    if [[ -n "$detected" ]]; then
+      print -r -- "${detected%/products/studyos/src/server.mjs}"
+      return 0
+    fi
+  fi
+
+  # Último fallback: procura apenas em áreas comuns do usuário, sem varrer o disco inteiro.
+  local base detected
+  for base in "$HOME/Projects" "$HOME/Desktop" "$HOME/Documents"; do
+    [[ -d "$base" ]] || continue
+    detected="$(find "$base" -maxdepth 6 -type f -path '*/saas-engineering-platform/products/studyos/src/server.mjs' -print -quit 2>/dev/null || true)"
+    if [[ -n "$detected" ]]; then
+      print -r -- "${detected%/products/studyos/src/server.mjs}"
+      return 0
+    fi
+  done
+
+  print -r -- "$preferred"
+}
+
+SAAS_ROOT="$(resolve_saas_root)"
 STUDYOS_ROOT="$SAAS_ROOT/products/studyos"
 LAUNCH_DIR="$HOME/Library/LaunchAgents"
 LOG_DIR="$HOME/Library/Logs/ProjectCommandCenter"
@@ -23,13 +61,18 @@ if [[ ! -f "$PROJECT_ROOT/scripts/project-command-center-service.sh" ]]; then
   exit 1
 fi
 if [[ ! -f "$STUDYOS_ROOT/src/server.mjs" ]]; then
-  echo "Erro: StudyOS não encontrado em $STUDYOS_ROOT" >&2
+  echo "Erro: StudyOS não encontrado." >&2
+  echo "Caminho testado: $STUDYOS_ROOT" >&2
+  echo "Você também pode informar manualmente: SAAS_ENGINEERING_ROOT=/caminho/saas-engineering-platform" >&2
   exit 1
 fi
 if [[ ! -s "$HOME/.nvm/nvm.sh" ]]; then
   echo "Erro: NVM não encontrado em $HOME/.nvm/nvm.sh" >&2
   exit 1
 fi
+
+echo "SaaS Engineering Platform: $SAAS_ROOT"
+echo "StudyOS:                  $STUDYOS_ROOT"
 
 mkdir -p "$LAUNCH_DIR" "$LOG_DIR"
 
