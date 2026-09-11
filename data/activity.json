@@ -2,6 +2,18 @@
   "version": 1,
   "items": [
     {
+      "date": "2026-09-10",
+      "project": "Project Command Center",
+      "type": "portfolio-sync",
+      "text": "Roadmaps e dashboard foram reconciliados após os avanços de RadioNode-BR, SMSBR, ESP32 AdBlocker, SatOps, StudyOS, SaaS Engineering Platform, KES e Quansheng K1 Firmware; gates físicos/produção continuam explícitos."
+    },
+    {
+      "date": "2026-09-10",
+      "project": "Quansheng K1 Firmware",
+      "type": "roadmap",
+      "text": "Roadmap K0–K6 criado com F4HWN v6.0.0 como upstream candidato; o próximo gate é comparar builds limpas Fusion e FieldOps antes de criar o fork ou gravar o rádio."
+    },
+    {
       "date": "2026-09-09",
       "project": "Project Command Center",
       "type": "fix",
