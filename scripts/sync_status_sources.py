@@ -178,7 +178,7 @@ def main():
     now = datetime.now().astimezone().isoformat(timespec="seconds")
     runtime_projects = copy.deepcopy(projects_payload)
     runtime_projects["lastUpdated"] = now
-    runtime_projects["dashboardVersion"] = "4.5"
+    runtime_projects["dashboardVersion"] = "4.6"
     runtime_projects["projects"] = projects
     runtime_projects["autoSync"] = {
         "generatedAt": now,
