@@ -2,25 +2,44 @@
 
 Plano de validação prática do Knowledge Extraction System.
 
+## Estado atual — 2026-09-10
+
+O KES deixou de ser apenas especificação: os dois pilotos agora têm fontes formalmente selecionadas e manifests versionados, e o repositório possui validação automática dos manifests contra o schema v1 e regras extras de privacidade/proveniência.
+
+- **Pilot A:** `A Família Leitora`, de Sarah Mackenzie, disponível na Library privada do usuário. O Git guarda somente referência opaca/metadata; texto protegido e IDs privados não são versionados.
+- **Pilot B:** canal público `The Tech Prepper`, inicialmente limitado a inventário + 5–10 vídeos diretamente ligados a comunicações/off-grid/RadioLink.
+- **CI:** schema, unicidade, referências privadas e regras de manifesto passam por gate automático.
+
+A extração das fontes e a geração dos primeiros Canonical Knowledge Packages ainda não foram marcadas como concluídas.
+
 ## Objetivo
 
 Validar o mesmo modelo canônico em duas modalidades diferentes, sem depender de um domínio específico.
 
-## Pilot A — Book / Document
+## Pilot A — Book / Document 🟡
 
-Fonte preferencial: um livro já usado na Knowledge Base Mãe Leitora, idealmente um dos títulos-base do projeto.
+Fonte selecionada: **A Família Leitora — Sarah Mackenzie**.
 
-### Entregáveis
+### Concluído
 
-- manifesto da fonte;
-- estrutura reconstruída;
-- texto normalizado;
-- segmentos rastreáveis por capítulo/seção/página;
-- resumo por capítulo;
-- conceitos e glossário;
-- Q&A de teste;
-- relatório dos Quality Gates;
-- índice retrieval-ready.
+- [x] fonte real selecionada;
+- [x] Source Manifest v1 criado;
+- [x] referência privada opaca definida;
+- [x] política impede commit de conteúdo protegido e IDs internos da Library;
+- [x] manifesto validado em CI.
+
+### Próximos entregáveis
+
+- [ ] adquirir/ler a fonte no ambiente privado do pipeline;
+- [ ] reconstruir estrutura de capítulos/seções;
+- [ ] normalizar texto sem publicar o original no Git;
+- [ ] gerar segmentos rastreáveis por capítulo/seção/página;
+- [ ] resumo por capítulo;
+- [ ] conceitos e glossário;
+- [ ] Q&A de teste;
+- [ ] relatório dos Quality Gates;
+- [ ] índice retrieval-ready;
+- [ ] primeiro Canonical Knowledge Package.
 
 ### Métricas
 
@@ -28,26 +47,36 @@ Fonte preferencial: um livro já usado na Knowledge Base Mãe Leitora, idealment
 - proporção de segmentos com âncora válida;
 - número de gaps não explicados;
 - duplicações técnicas;
-- precisão de recuperação em um conjunto de perguntas de teste.
+- precisão de recuperação em perguntas de teste.
 
-## Pilot B — Video / YouTube
+## Pilot B — Video / YouTube 🟡
 
-Fonte preferencial: um canal já relevante aos projetos técnicos, com **The Tech Prepper** como candidato inicial por já ter sido usado como referência arquitetural em RadioLink.
+Fonte selecionada: **The Tech Prepper**.
 
-Primeira execução recomendada: inventário do canal + subconjunto de 5 a 10 vídeos diretamente relacionados ao tema de interesse. Depois, expandir incrementalmente.
+Primeira execução: inventário do canal + subconjunto de 5 a 10 vídeos diretamente relacionados ao tema de comunicações/off-grid e às referências do RadioLink. Expansão somente após o primeiro ciclo passar pelos Quality Gates.
 
-### Entregáveis
+### Concluído
 
-- manifesto da coleção/canal;
-- inventário de vídeos;
-- manifestos individuais;
-- transcrições normalizadas com origem registrada;
-- segmentos com timestamps;
-- evidências visuais apenas quando necessárias;
-- mapa temático;
-- conceitos/procedimentos/referências;
-- relatório dos Quality Gates;
-- índice retrieval-ready.
+- [x] canal real selecionado;
+- [x] manifesto da coleção criado;
+- [x] escopo inicial 5–10 vídeos definido;
+- [x] regra de proveniência por URL/video ID/timestamp definida;
+- [x] manifesto validado em CI.
+
+### Próximos entregáveis
+
+- [ ] inventário atual do canal;
+- [ ] selecionar 5–10 vídeos do primeiro corpus;
+- [ ] manifestos individuais;
+- [ ] obter captions/transcrições por método permitido e registrar origem;
+- [ ] normalizar transcrições;
+- [ ] gerar segmentos com timestamps;
+- [ ] usar evidência visual apenas quando necessária;
+- [ ] mapa temático;
+- [ ] conceitos/procedimentos/referências;
+- [ ] relatório dos Quality Gates;
+- [ ] índice retrieval-ready;
+- [ ] primeiro Canonical Knowledge Package de vídeo.
 
 ### Métricas
 
@@ -67,6 +96,16 @@ O padrão v1 pode ser marcado como **Validated** quando:
 4. reprocessar uma fonte não gerar duplicação lógica relevante;
 5. a mesma camada de retrieval conseguir consultar os dois pilotos;
 6. limitações conhecidas estiverem registradas.
+
+## Sequência imediata
+
+```text
+Pilot A: source acquire -> extract -> normalize -> segment -> CKP -> gates
+Pilot B: channel inventory -> 5–10 videos -> captions -> segment -> CKP -> gates
+                         \___________________________/
+                                      |
+                           shared retrieval validation
+```
 
 ## Próxima evolução após validação
 
