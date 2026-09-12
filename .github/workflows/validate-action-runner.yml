@@ -1,0 +1,40 @@
+name: Validate Action Runner
+
+on:
+  pull_request:
+    paths:
+      - "scripts/command_center_server.py"
+      - "scripts/action-runner-ui.js"
+      - "scripts/test_command_center_server.py"
+      - "scripts/project-command-center-service.sh"
+      - ".github/workflows/validate-action-runner.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/command_center_server.py"
+      - "scripts/action-runner-ui.js"
+      - "scripts/test_command_center_server.py"
+      - "scripts/project-command-center-service.sh"
+      - ".github/workflows/validate-action-runner.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install zsh
+        run: sudo apt-get update && sudo apt-get install -y zsh
+      - name: Python syntax
+        run: python -m py_compile scripts/command_center_server.py
+      - name: Unit tests
+        run: python scripts/test_command_center_server.py
+      - name: Browser script syntax
+        run: node --check scripts/action-runner-ui.js
+      - name: Service shell syntax
+        run: zsh -n scripts/project-command-center-service.sh

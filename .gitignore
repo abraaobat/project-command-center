@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 data/runtime-projects.json
 data/runtime-activity.json
+data/runtime-action-jobs.json

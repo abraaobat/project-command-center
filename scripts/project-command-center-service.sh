@@ -3,6 +3,7 @@ set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PORT="${PCC_PORT:-8787}"
+BIND="${PCC_BIND:-127.0.0.1}"
 PYTHON_BIN="${PCC_PYTHON_BIN:-$(command -v python3 || true)}"
 SYNC_PID=""
 SERVER_PID=""
@@ -43,9 +44,9 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 
-# Sobe o HTTP imediatamente. Sincronização de status/GitHub não deve atrasar
-# a disponibilidade do painel durante login, reboot ou restart do launchd.
-"$PYTHON_BIN" -m http.server "$PORT" &
+# O servidor local inclui a API do Action Runner. Ele fica preso ao loopback por
+# padrão porque marcar uma ação pode iniciar um agente que edita o workspace.
+"$PYTHON_BIN" scripts/command_center_server.py --port "$PORT" --bind "$BIND" &
 SERVER_PID=$!
 
 # Mantém fontes locais/GitHub atualizadas em background. A primeira atualização
@@ -60,6 +61,4 @@ SERVER_PID=$!
 ) &
 SYNC_PID=$!
 
-# O shell permanece vivo para o launchd supervisionar todo o conjunto e para
-# encerrar tanto servidor quanto sincronizador em um restart do job.
 wait "$SERVER_PID"
