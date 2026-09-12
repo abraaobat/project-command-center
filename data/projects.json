@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-09-10T20:24:00-04:00",
+  "lastUpdated": "2026-09-12T14:15:00-04:00",
   "dashboardVersion": "4.6",
   "progressNote": "Percentuais são estimativas operacionais baseadas no estágio atual, entregáveis concluídos e próximo marco; não representam esforço linear.",
   "projects": [
@@ -66,6 +66,22 @@
       "next": "Gerar builds limpas Fusion v6.0.0 e FieldOps v6.0.0 e comparar flash/RAM headroom.",
       "action": "Validar build reproduzível das duas edições sem alterar nem gravar o rádio.",
       "subprojects": ["Fusion baseline", "FieldOps/FOX Hunt/Beacon", "Recovery/flash", "Fork próprio", "Satélite", "Integração DigiRig/RadioLink"]
+    },
+    {
+      "id": "nanovna-modern",
+      "name": "NanoVNA Modern",
+      "category": "radio",
+      "kind": "Firmware + Web + Hardware • NanoVNA-H4 / ESP32-S3",
+      "status": "F0 hardware fingerprint / foundation concluída",
+      "statusClass": "validate",
+      "priority": "Alta",
+      "progress": 12,
+      "roadmap": "F0–F14 • foco atual F0/F1",
+      "current": "Repositório independente criado e documentação-base publicada. Hardware de referência: ZeenKo ZN401 / NanoVNA-H4 HW 4.7_ZK, STM32F303xC, NanoVNA-D 1.2.44 [x401], display 480x320 e microSD funcional. USB normal ainda não enumerou no macOS.",
+      "architecture": "NanoVNA RF/DSP → Modern UI + SD Extensions → USB Protocol → Bridge/Web PWA ou ESP32-S3 SmartLink → Smart Analysis/TinyML/IA externa opcional",
+      "next": "Fechar F0 confirmando USB normal e DFU somente-leitura; depois fixar upstream NanoVNA-D e produzir build F303 reproduzível antes de qualquer flash experimental.",
+      "action": "Testar cabo de dados conhecido, registrar enumeração USB e validar DFU sem gravação.",
+      "subprojects": ["Hardware fingerprint", "F303 baseline", "Modern UI", "Modular dashboard", "Enhanced graphics", "microSD extensions", "USB Bridge", "Web/PWA", "Smart Analysis", "ESP32-S3 SmartLink", "TinyML/AI"]
     },
     {
       "id": "esp32-adblocker",
