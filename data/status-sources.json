@@ -30,6 +30,13 @@
       "enabled": true
     },
     {
+      "projectId": "nanovna-modern",
+      "repository": "abraaobat/nanovna-modern",
+      "ref": "main",
+      "path": "project-status.json",
+      "enabled": true
+    },
+    {
       "projectId": "esp32-adblocker",
       "repository": "abraaobat/ESP32_AdBlocker",
       "ref": "main",
